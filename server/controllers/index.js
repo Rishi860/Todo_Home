@@ -1,12 +1,41 @@
 const User = require('../models/index')
 
 module.exports = {
-  async add (req, res) {
+  // async add (req, res) {
+  //   try {
+  //     console.log('here add')
+  //     const newUser = await User.create(req.body)
+  //     console.log(req.body)
+  //     res.send(newUser)
+  //   } catch (error) {
+  //     console.log(error)
+  //     res.status(400).send({
+  //       error:'Something went wrong while creating a new user'
+  //     })  
+  //   }
+  // },
+  async get (req, res) {
     try {
-      console.log('here')
-      const newUser = await User.create(req.body)
-      console.log(req.body)
-      res.send(newUser)
+      console.log('here get')
+      const user = await User.findOne({
+        name:req.query.search
+      })
+      console.log(req.query.search,user)
+      res.send(user)
+    } catch (error) {
+      console.log(error)
+      res.status(400).send({
+        error:'Something went wrong while reaching the list'
+      })  
+    }
+  },
+  async delete (req, res) {
+    try {
+      console.log('here delete',req.body)
+      await User.findOneAndUpdate({
+        name:req.body.name},
+        req.body)
+      res.send("Update completed")
     } catch (error) {
       console.log(error)
       res.status(400).send({
