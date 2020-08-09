@@ -18,7 +18,7 @@
           label="New Todo"
           v-model="newTodo"
           :append-outer-icon="newTodo ? 'mdi-plus' : 'mdi-plus'"
-          @click:append-outer="addTodo"
+          @click:append-outer="addTodo(newTodo)"
         ></v-text-field>
       </div>
     </v-col>
@@ -47,9 +47,12 @@ export default {
       let body = {name:this.name,todos:this.todos} 
       await TodoServices.delete(body)
     },
-    async addTodo (){
+    async addTodo (newTodo){
+      //  Todo: new user entry !!!!
+      console.log(this.todos)
+      this.todos.push(newTodo)
       let body = {name:this.name,todos:this.todos}
-      /*const newTodo = */await TodoServices.newTodo(body)
+      await TodoServices.newTodo(body)
     }
   }
 }

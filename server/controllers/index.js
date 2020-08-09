@@ -1,19 +1,27 @@
 const User = require('../models/index')
 
 module.exports = {
-  // async add (req, res) {
-  //   try {
-  //     console.log('here add')
-  //     const newUser = await User.create(req.body)
-  //     console.log(req.body)
-  //     res.send(newUser)
-  //   } catch (error) {
-  //     console.log(error)
-  //     res.status(400).send({
-  //       error:'Something went wrong while creating a new user'
-  //     })  
-  //   }
-  // },
+  async add (req, res) {
+    try {
+      console.log('here add ',req.body.name)
+      const find = await User.findOne({ name: req.body.name })
+      if (find) {
+        console.log('here if ')
+        const userData = await User.findOneAndUpdate({
+          name:req.body.name},
+          req.body)
+        res.send(userData)
+      } else {
+        const newUser = await User.create(req.body)
+        res.send(newUser)
+      }
+    } catch (error) {
+      console.log(error)
+      res.status(400).send({
+        error:'Something went wrong while creating a new user'
+      })  
+    }
+  },
   async get (req, res) {
     try {
       console.log('here get')

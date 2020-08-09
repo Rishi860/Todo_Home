@@ -9,6 +9,9 @@ export default {
         })
     },
     delete (todo) {
-        return Api().post('/', todo)
+        return Api().put('/', todo)
+    },
+    newTodo (body){
+        return Api().post('/',body)
     }
 }
