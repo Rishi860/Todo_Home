@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const userTodoSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   todos:[{type: String}]
 },{collection:'characters_todo'})

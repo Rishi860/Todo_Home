@@ -47,8 +47,20 @@ module.exports = {
     } catch (error) {
       console.log(error)
       res.status(400).send({
+        error:'Something went wrong while deleting todos'
+      })
+    }
+  },
+  async create (req, res) {
+    try {
+      console.log('here create', req.body)
+      const newUser = await User.create(req.body)
+      res.send(newUser)
+    } catch (error) {
+      console.log(error)
+      res.status(400).send({
         error:'Something went wrong while creating a new user'
-      })  
+      })
     }
   }
 }

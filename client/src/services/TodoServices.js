@@ -13,5 +13,8 @@ export default {
     },
     newTodo (body){
         return Api().post('/',body)
+    },
+    create (body){
+        return Api().post('/new-user',body)
     }
 }

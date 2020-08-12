@@ -3,25 +3,25 @@
     <v-col>
       <v-toolbar color="indigo" dark>
         <v-toolbar-title>Todo</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-btn @click="navigateTo({name:'newuser'})" color="indigo" depressed dark>Create</v-btn>
       </v-toolbar>
       <v-text-field
         label="Name"
-        v-model="name"
+        v-model="body.name"
+        :rules = "[required]"
       ></v-text-field>
-      <v-btn @click="get" rounded color="indigo" dark>Search</v-btn>
       <li class="mt-2" v-for="item in body.todos" :key="item">
         {{ item }} 
         <v-btn @click="deleteTodo(item)" rounded color="indigo" dark>X</v-btn>
       </li>
-      <div v-if="name !=''">
+      <div>
         <v-text-field
           label="New Todo"
           v-model="newTodo"
           :append-outer-icon="newTodo ? 'mdi-plus' : 'mdi-plus'"
           @click:append-outer="addTodo(newTodo)"
         ></v-text-field>
+      <v-btn @click="create" rounded color="indigo" dark>Create</v-btn>
+      <div class="error">{{error}}</div>
       </div>
     </v-col>
   </v-card>
@@ -38,25 +38,32 @@ export default {
         name:'',
         todos:[]
       },
-      newTodo:''
+      newTodo:'',
+      required: (value) => !!value || 'Required',
+      error: null
     }
   },
   methods:{
-    async get (){
-      const getUser = (await TodoServices.get(this.name)).data
-      this.body = getUser;
-    },
     async deleteTodo (item){
       this.body.todos.splice(this.body.todos.indexOf(item),1)
-      await TodoServices.delete(this.body)
     },
     async addTodo (newTodo){
       this.body.todos.push(newTodo)
-      await TodoServices.newTodo(this.body)
       this.newTodo = ''
     },
-    navigateTo(route) {
-      this.$router.push(route)
+    async create (){
+      if (this.body.name == null) {
+        this.error = 'Name is required!!'
+        return;
+      } else {
+        const userdata = (await TodoServices.create(this.body)).data;
+        this.$router.push({
+          name:'home',
+          params:{
+            body: userdata
+          }
+        })
+      }
     }
   }
 }

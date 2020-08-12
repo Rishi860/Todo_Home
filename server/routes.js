@@ -7,4 +7,7 @@ module.exports = (app) => {
     todoController.get)
     app.put('/',
     todoController.delete)
+
+    app.post('/new-user',
+    todoController.create)
 }
