@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import NewUser from '../views/NewUser.vue'
+import UserTodo from '../views/UserTodo.vue'
+import Completed from '../views/Completed.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +17,16 @@ Vue.use(VueRouter)
     path: '/new-user',
     name: 'newuser',
     component: NewUser
+  },
+  {
+    path: '/:userName',
+    name: 'usertodo',
+    component: UserTodo
+  },
+  {
+    path: '/:userName/completed',
+    name: 'completed',
+    component: Completed
   }
 ]
 

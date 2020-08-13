@@ -16,5 +16,8 @@ export default {
     },
     create (body){
         return Api().post('/new-user',body)
+    },
+    complete (body){
+        return Api().post(`/${body.name}`,body)
     }
 }

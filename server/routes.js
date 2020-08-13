@@ -10,4 +10,6 @@ module.exports = (app) => {
 
     app.post('/new-user',
     todoController.create)
+    app.post('/:userName',
+    todoController.complete)
 }

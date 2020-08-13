@@ -7,7 +7,8 @@ const userTodoSchema = new Schema({
     required: true,
     unique: true
   },
-  todos:[{type: String}]
+  todos:[{type: String}],
+  todosCompleted: [{type: String}]
 },{collection:'characters_todo'})
 
 const User= mongoose.model('User', userTodoSchema)

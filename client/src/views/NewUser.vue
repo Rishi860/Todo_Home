@@ -2,7 +2,7 @@
   <v-card class="mx-auto" max-width="900">
     <v-col>
       <v-toolbar color="indigo" dark>
-        <v-toolbar-title>Todo</v-toolbar-title>
+        <v-toolbar-title @click="navigateTo({name:'home'})" class="pointer">Todo</v-toolbar-title>
       </v-toolbar>
       <v-text-field
         label="Name"
@@ -21,7 +21,7 @@
           @click:append-outer="addTodo(newTodo)"
         ></v-text-field>
       <v-btn @click="create" rounded color="indigo" dark>Create</v-btn>
-      <div class="error">{{error}}</div>
+      <div class="alert mt-2">{{response}}</div>
       </div>
     </v-col>
   </v-card>
@@ -40,7 +40,7 @@ export default {
       },
       newTodo:'',
       required: (value) => !!value || 'Required',
-      error: null
+      response: null
     }
   },
   methods:{
@@ -56,15 +56,26 @@ export default {
         this.error = 'Name is required!!'
         return;
       } else {
-        const userdata = (await TodoServices.create(this.body)).data;
-        this.$router.push({
-          name:'home',
-          params:{
-            body: userdata
-          }
-        })
+        const response = (await TodoServices.create(this.body)).data;
+        this.response = response;
       }
+    },
+    navigateTo(route) {
+      this.$router.push(route)
     }
   }
 }
 </script>
+
+<style  scoped>
+  .alert{
+    background-color: blue;
+    border-color: blue;
+    margin-top: 2px;
+    text-align: center;
+    color: white;
+  }
+  .pointer{
+    cursor: pointer
+  }
+</style>

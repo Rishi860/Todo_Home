@@ -14,7 +14,9 @@ require('./routes')(app)
 
 mongoose.connect('mongodb://localhost:27017/todo_data',{
   useNewUrlParser:true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false
 })
 
 const db = mongoose.connection;

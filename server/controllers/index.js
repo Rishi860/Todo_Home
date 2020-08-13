@@ -3,7 +3,7 @@ const User = require('../models/index')
 module.exports = {
   async add (req, res) {
     try {
-      console.log('here add ',req.body.name)
+      console.log('here add ')
       const find = await User.findOne({ name: req.body.name })
       if (find) {
         console.log('here if ')
@@ -53,13 +53,30 @@ module.exports = {
   },
   async create (req, res) {
     try {
-      console.log('here create', req.body)
+      console.log('here create')
+      let user = await User.findOne({name: req.body.name})
+      if(user)
+      return res.send(" User alreday exist ");
       const newUser = await User.create(req.body)
-      res.send(newUser)
+      res.send(" New user created ")
     } catch (error) {
       console.log(error)
       res.status(400).send({
         error:'Something went wrong while creating a new user'
+      })
+    }
+  },
+  async complete (req, res) {
+    try {
+      console.log('here complete')
+      await User.findOneAndUpdate({
+        name:req.body.name},
+        req.body)
+      res.send(" Todo Added ")
+    } catch (error) {
+      console.log(error)
+      res.status(400).send({
+        error:'Something went wrong while adding it to the complete list'
       })
     }
   }

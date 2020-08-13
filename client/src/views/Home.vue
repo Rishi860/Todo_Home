@@ -10,51 +10,22 @@
         label="Name"
         v-model="name"
       ></v-text-field>
-      <v-btn @click="get" rounded color="indigo" dark>Search</v-btn>
-      <li class="mt-2" v-for="item in body.todos" :key="item">
-        {{ item }} 
-        <v-btn @click="deleteTodo(item)" rounded color="indigo" dark>X</v-btn>
-      </li>
-      <div v-if="name !=''">
-        <v-text-field
-          label="New Todo"
-          v-model="newTodo"
-          :append-outer-icon="newTodo ? 'mdi-plus' : 'mdi-plus'"
-          @click:append-outer="addTodo(newTodo)"
-        ></v-text-field>
-      </div>
+      <v-btn @click="navigateTo({name:'usertodo',params:{userName: name}})" rounded color="indigo" dark>Search</v-btn>
     </v-col>
   </v-card>
 </template>
 
 <script>
 // @ is an alias to /src
-import TodoServices from '@/services/TodoServices'
 
 export default {
   data () {
     return {
-      body:{
-        name:'',
-        todos:[]
-      },
+      name:'',
       newTodo:''
     }
   },
   methods:{
-    async get (){
-      const getUser = (await TodoServices.get(this.name)).data
-      this.body = getUser;
-    },
-    async deleteTodo (item){
-      this.body.todos.splice(this.body.todos.indexOf(item),1)
-      await TodoServices.delete(this.body)
-    },
-    async addTodo (newTodo){
-      this.body.todos.push(newTodo)
-      await TodoServices.newTodo(this.body)
-      this.newTodo = ''
-    },
     navigateTo(route) {
       this.$router.push(route)
     }
