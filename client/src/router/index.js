@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import NewUser from '../views/NewUser.vue'
 import UserTodo from '../views/UserTodo.vue'
 import Completed from '../views/Completed.vue'
+import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ Vue.use(VueRouter)
     path: '/:userName/completed',
     name: 'completed',
     component: Completed
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
   }
 ]
 

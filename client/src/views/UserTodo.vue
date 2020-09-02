@@ -8,6 +8,7 @@
       </v-toolbar>
       <v-text-field
         label="Name"
+        class="mt-4"
         v-model="body.name"
       ></v-text-field>
       <li class="mt-8" v-for="item in body.todos" :key="item">
@@ -25,7 +26,7 @@
         <v-text-field
           label="New Todo"
           v-model="newTodo"
-          :append-outer-icon="newTodo ? 'mdi-plus' : ''"
+          :append-outer-icon="newTodo ? 'mdi-plus' : 'mdi-plus'"
           @click:append-outer="addTodo(newTodo)"
         ></v-text-field>
       </div>
@@ -58,9 +59,13 @@ export default {
       await TodoServices.delete(this.body)
     },
     async addTodo (newTodo){
-      this.body.todos.push(newTodo)
-      await TodoServices.newTodo(this.body)
-      this.newTodo = ''
+      if(this.newTodo){
+        this.body.todos.push(newTodo)
+        await TodoServices.newTodo(this.body)
+        this.newTodo = '';
+      } else {
+        this.$router.push({ name: 'login' })
+      }
     },
     navigateTo(route) {
       this.$router.push(route)
